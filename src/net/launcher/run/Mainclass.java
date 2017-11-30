@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import net.launcher.MusPlay;
 import net.launcher.components.Frame;
 import net.launcher.utils.BaseUtils;
@@ -16,7 +17,7 @@ public class Mainclass {
 			File dir = new File(BaseUtils.getAssetsDir().toString());
 			if (!dir.exists())
 				dir.mkdirs();
-			InputStream stream = Starter.class.getResourceAsStream("/net/launcher/theme/favicon.png");
+			InputStream stream = Starter.class.getResourceAsStream("/assets/launcher/theme/favicon.png");
 			OutputStream resStreamOut = null;
 			int readBytes;
 			byte[] buffer = new byte[4096];

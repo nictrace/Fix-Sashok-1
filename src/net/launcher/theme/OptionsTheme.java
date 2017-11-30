@@ -1,6 +1,7 @@
 package net.launcher.theme;
 
 import java.awt.Color;
+
 import javax.swing.border.EmptyBorder;
 
 import net.launcher.components.Align;

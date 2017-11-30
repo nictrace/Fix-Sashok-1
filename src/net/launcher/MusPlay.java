@@ -2,6 +2,7 @@ package net.launcher;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
+
 import javazoom.jl.player.Player;
 
 public class MusPlay {
@@ -9,7 +10,7 @@ public class MusPlay {
 
 	// constructor that takes the name of an MP3 file
 	public MusPlay(String filename) {
-		play(filename);
+		play("/assets/audio/" + filename);
 	}
 
 	public void close() {

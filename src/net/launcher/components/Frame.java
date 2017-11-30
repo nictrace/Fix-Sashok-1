@@ -1,5 +1,17 @@
 package net.launcher.components;
 
+import static net.launcher.utils.BaseUtils.buildUrl;
+import static net.launcher.utils.BaseUtils.empty;
+import static net.launcher.utils.BaseUtils.getPropertyBoolean;
+import static net.launcher.utils.BaseUtils.getPropertyInt;
+import static net.launcher.utils.BaseUtils.getPropertyString;
+import static net.launcher.utils.BaseUtils.getServerNames;
+import static net.launcher.utils.BaseUtils.openURL;
+import static net.launcher.utils.BaseUtils.restart;
+import static net.launcher.utils.BaseUtils.send;
+import static net.launcher.utils.BaseUtils.setProperty;
+import static net.launcher.utils.BaseUtils.throwException;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -26,6 +38,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
+import com.sun.awt.AWTUtilities;
+
 import net.launcher.run.Settings;
 import net.launcher.theme.Message;
 import net.launcher.utils.BaseUtils;
@@ -33,9 +47,6 @@ import net.launcher.utils.GuardUtils;
 import net.launcher.utils.ImageUtils;
 import net.launcher.utils.ThemeUtils;
 import net.launcher.utils.ThreadUtils;
-import static net.launcher.utils.BaseUtils.*;
-
-import com.sun.awt.AWTUtilities;
 
 public class Frame extends JFrame implements ActionListener, FocusListener {
 	boolean b1 = false;

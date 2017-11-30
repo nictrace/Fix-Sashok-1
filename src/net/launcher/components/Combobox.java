@@ -1,5 +1,8 @@
 package net.launcher.components;
 
+import static net.launcher.utils.ImageUtils.genButton;
+import static net.launcher.utils.ImageUtils.genPanel;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -7,12 +10,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+
 import javax.swing.JComponent;
 
 import net.launcher.MusPlay;
 import net.launcher.run.Settings;
 import net.launcher.utils.BaseUtils;
-import static net.launcher.utils.ImageUtils.*;
 
 public class Combobox extends JComponent implements MouseListener, MouseMotionListener {
 	private static final long serialVersionUID = 1L;

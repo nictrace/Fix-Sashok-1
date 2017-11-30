@@ -1,6 +1,7 @@
 package net.launcher.components;
 
 import java.awt.Color;
+
 import javax.swing.JComponent;
 
 import net.launcher.utils.BaseUtils;

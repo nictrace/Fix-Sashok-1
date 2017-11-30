@@ -57,9 +57,15 @@ public class Settings {
 	 */
 	public static final int thread = 8;
 
+    public static boolean useMulticlient			 = true;	//Использовать функцию "по клиенту на сервер"
 	/** Список запрещенных процессов. */
 	public static final String[] p = { "wireshark", "cheat" };
 
+	/** Имя конфиг-файла **/
+	public static final String configFilename 	= "launcher.config";
+
+	// для 1.5.2 обязательно true
+	public static boolean patchDir 					 = true;	 //Использовать автоматическую замену директории игры (true/false)	
 	/** Высота окна клиента */
 	public static int height = 532;
 

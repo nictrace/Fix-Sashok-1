@@ -1,16 +1,57 @@
 package net.launcher.utils;
 
+import static net.launcher.theme.DraggerTheme.dbuttons;
+import static net.launcher.theme.DraggerTheme.dragger;
+import static net.launcher.theme.DraggerTheme.title;
+import static net.launcher.theme.LoginTheme.frameH;
+import static net.launcher.theme.LoginTheme.frameW;
+import static net.launcher.theme.LoginTheme.links;
+import static net.launcher.theme.LoginTheme.login;
+import static net.launcher.theme.LoginTheme.newsBrowser;
+import static net.launcher.theme.LoginTheme.password;
+import static net.launcher.theme.LoginTheme.serverbar;
+import static net.launcher.theme.LoginTheme.servers;
+import static net.launcher.theme.LoginTheme.toAuth;
+import static net.launcher.theme.LoginTheme.toGame;
+import static net.launcher.theme.LoginTheme.toLogout;
+import static net.launcher.theme.LoginTheme.toOptions;
+import static net.launcher.theme.LoginTheme.toPersonal;
+import static net.launcher.theme.LoginTheme.toRegister;
+import static net.launcher.theme.LoginTheme.update_exe;
+import static net.launcher.theme.LoginTheme.update_jar;
+import static net.launcher.theme.LoginTheme.update_no;
+import static net.launcher.theme.OptionsTheme.Music;
+import static net.launcher.theme.OptionsTheme.cleandir;
+import static net.launcher.theme.OptionsTheme.close;
+import static net.launcher.theme.OptionsTheme.fullscrn;
+import static net.launcher.theme.OptionsTheme.loadnews;
+import static net.launcher.theme.OptionsTheme.memory;
+import static net.launcher.theme.OptionsTheme.updatepr;
+import static net.launcher.theme.PersonalTheme.buyCloak;
+import static net.launcher.theme.PersonalTheme.buyPremium;
+import static net.launcher.theme.PersonalTheme.buyUnban;
+import static net.launcher.theme.PersonalTheme.buyVaucher;
+import static net.launcher.theme.PersonalTheme.buyVip;
+import static net.launcher.theme.PersonalTheme.changeskin;
+import static net.launcher.theme.PersonalTheme.exchangeBtn;
+import static net.launcher.theme.PersonalTheme.exchangeFrom;
+import static net.launcher.theme.PersonalTheme.exchangeTo;
+import static net.launcher.theme.PersonalTheme.toGamePSL;
+import static net.launcher.theme.PersonalTheme.vaucher;
+import static net.launcher.theme.PersonalTheme.vaucherButton;
+import static net.launcher.theme.RegTheme.closereg;
+import static net.launcher.theme.RegTheme.loginReg;
+import static net.launcher.theme.RegTheme.mailReg;
+import static net.launcher.theme.RegTheme.okreg;
+import static net.launcher.theme.RegTheme.password2Reg;
+import static net.launcher.theme.RegTheme.passwordReg;
+
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 
 import net.launcher.components.Frame;
 import net.launcher.components.LinkLabel;
 import net.launcher.run.Settings;
-import static net.launcher.theme.LoginTheme.*;
-import static net.launcher.theme.OptionsTheme.*;
-import static net.launcher.theme.RegTheme.*;
-import static net.launcher.theme.PersonalTheme.*;
-import static net.launcher.theme.DraggerTheme.*;
 
 public class ThemeUtils extends BaseUtils {
 	public static void updateStyle(Frame main) throws Exception {
