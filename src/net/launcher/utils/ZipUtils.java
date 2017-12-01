@@ -1,81 +1,73 @@
 package net.launcher.utils;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.Vector;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 public class ZipUtils {
-	public static void unzip(String path, String file) {
+
+	public static void unzip(String destinationFolder, String zipFile) {
+		File directory = new File(destinationFolder);
+        
+		// if the output directory doesn't exist, create it
+		if(!directory.exists()) 
+			directory.mkdirs();
+
+		// buffer for read and write data to file
+		byte[] buffer = new byte[2048];
+        
 		try {
-			Vector<ZipEntry> zipentry = new Vector<ZipEntry>();
-			ZipFile zipfile = new ZipFile(file);
-			Enumeration<?> en = zipfile.entries();
-
-			while (en.hasMoreElements())
-				zipentry.addElement((ZipEntry) en.nextElement());
-
-			for (int i = 0; i < zipentry.size(); i++) {
-				ZipEntry ze = (ZipEntry) zipentry.elementAt(i);
-				extractFromZip(file, path, ze.getName(), zipfile, ze);
+			FileInputStream fInput = new FileInputStream(zipFile);
+			ZipInputStream zipInput = new ZipInputStream(fInput, Charset.forName("Cp866") );	// UTF-8 for linux
+            
+			ZipEntry entry = zipInput.getNextEntry();
+            
+			while(entry != null){
+				String entryName = entry.getName();
+				File file = new File(destinationFolder + File.separator + entryName);
+                
+				System.out.println("Unzip file " + entryName + " to " + file.getAbsolutePath());
+                
+				// create the directories of the zip directory
+				if(entry.isDirectory()) {
+					File newDir = new File(file.getAbsolutePath());
+					if(!newDir.exists()) {
+						boolean success = newDir.mkdirs();
+						if(success == false) {
+							System.out.println("Problem creating Folder");
+						}
+					}
+                }
+				else {
+					if(Files.notExists(file.toPath().getParent())){		// if target directory's not created
+						Files.createDirectory(file.toPath().getParent());
+					}
+					
+					FileOutputStream fOutput = new FileOutputStream(file);					
+					int count = 0;
+					while ((count = zipInput.read(buffer)) > 0) {
+						// write 'count' bytes to the file output stream
+						fOutput.write(buffer, 0, count);
+					}
+					fOutput.close();
+				}
+				// close ZipEntry and take the next one
+				zipInput.closeEntry();
+				entry = zipInput.getNextEntry();
 			}
-
-			zipfile.close();
-			new File(file).delete();
-		} catch (Exception ex) {
-			BaseUtils.send(ex.toString());
+            
+			// close the last ZipEntry
+			zipInput.closeEntry();
+            
+			zipInput.close();
+			fInput.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-	}
-
-	static void extractFromZip(String szZipFilePath, String szExtractPath, String szName, ZipFile zf, ZipEntry ze)
-			throws Exception {
-		if (ze.isDirectory())
-			return;
-
-		String szDstName = slash2sep(szName);
-		String szEntryDir;
-
-		if (szDstName.lastIndexOf(File.separator) != -1)
-			szEntryDir = szDstName.substring(0, szDstName.lastIndexOf(File.separator));
-		else
-			szEntryDir = "";
-		File newDir = new File(szExtractPath + File.separator + szEntryDir);
-
-		newDir.mkdirs();
-
-		FileOutputStream fos = new FileOutputStream(szExtractPath + File.separator + szDstName);
-
-		InputStream is = zf.getInputStream(ze);
-		byte[] buf = new byte[1024];
-
-		int nLength;
-
-		while (true) {
-			nLength = is.read(buf);
-			if (nLength < 0)
-				break;
-			fos.write(buf, 0, nLength);
-		}
-
-		is.close();
-		fos.close();
-	}
-
-	static String slash2sep(String src) {
-		int i;
-		char[] chDst = new char[src.length()];
-		String dst;
-
-		for (i = 0; i < src.length(); i++) {
-			if (src.charAt(i) == '/')
-				chDst[i] = File.separatorChar;
-			else
-				chDst[i] = src.charAt(i);
-		}
-		dst = new String(chDst);
-		return dst;
 	}
 }

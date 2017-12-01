@@ -125,4 +125,6 @@ public class Message {
 	public static String registeroff = "Регистрация выключена!";
 	public static String unknown = "Неизвестная ошибка (%%)";
 	public static String banno = "Вы не забанены";
+    public static String folderSelector = "...";
+	public static String gamePath = "Путь для установки игры:";
 }

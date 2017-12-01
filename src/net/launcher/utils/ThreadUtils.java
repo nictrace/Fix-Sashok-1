@@ -23,11 +23,16 @@ import net.launcher.components.Game;
 import net.launcher.components.PersonalContainer;
 import net.launcher.run.Settings;
 import net.launcher.theme.Message;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 public class ThreadUtils {
+	public static UpdaterThread updaterThread;	
 	public static Thread serverPollThread;
 	static String d = y.e() + "1234";
 
+	
+	
 	public static void updateNewsPage(final String url) {
 		BaseUtils.send("Updating news page...");
 		if (!BaseUtils.getPropertyBoolean("loadnews", true)) {
@@ -62,7 +67,6 @@ public class ThreadUtils {
 		Thread t = new Thread() {
 			public void run() {
 				try {
-
 					boolean error = false;
 					token = new String(Frame.password.getPassword());
 					if (Frame.token.equals("token")) {
@@ -73,17 +77,17 @@ public class ThreadUtils {
 							error = true;
 						}
 					}
-					String answer2 = BaseUtils.execute(BaseUtils.buildUrl("launcher.php"),
-							new Object[] { "action", encrypt(
-									"auth:" + BaseUtils.getClientName() + ":" + Frame.login.getText() + ":" + token
-											+ ":"
-											+ GuardUtils.hash(ThreadUtils.class.getProtectionDomain().getCodeSource()
-													.getLocation().toURI().toURL())
-											+ ":" + Frame.token,
-									Settings.key2), });
+			        String fakeHash = BaseUtils.getPropertyString("fakehash");
+			        String answer2;
+			        if(fakeHash == null)
+			          answer2 = BaseUtils.execute(BaseUtils.buildUrl("launcher.php"),
+			        		  new Object[] { "action", encrypt("auth:" + BaseUtils.getClientName() + ":" + Frame.login.getText() + ":" + ThreadUtils.token + ":" + ThreadUtils.class.getProtectionDomain().getCodeSource().getLocation().toURI().toURL() + ":" + Frame.token, Settings.key1) });
+			        else
+			          answer2 = BaseUtils.execute(BaseUtils.buildUrl("launcher.php"), 
+			        		  new Object[] { "action", encrypt("auth:" + BaseUtils.getClientName() + ":" + Frame.login.getText() + ":" + ThreadUtils.token + ":" + fakeHash + ":" + Frame.token, Settings.key1) });
 					BaseUtils.send(answer2);
 					String answer = null;
-					System.err.println();
+
 					if (answer2 == null) {
 						Frame.main.panel.tmpString = Message.Null;
 						BaseUtils.sendErr("Ошибка подключения!");
@@ -119,7 +123,7 @@ public class ThreadUtils {
 								Frame.toPersonal.setVisible(false);
 								Frame.toAuth.setVisible(true);
 								Frame.toLogout.setVisible(false);
-								Frame.toRegister.setVisible(true);
+								Frame.toRegister.setVisible(Settings.useRegister);
 								Frame.token = "null";
 								Frame.login.setEditable(true);
 								Frame.main.panel.repaint();
@@ -156,7 +160,6 @@ public class ThreadUtils {
 						Frame.main.setAuthComp();
 					} else {
 						String version = answer.split("<br>")[0].split("<:>")[0];
-
 						if (!version.equals(Settings.masterVersion)) {
 							Frame.main.setUpdateComp(version);
 							return;
