@@ -402,7 +402,7 @@ public class ThreadUtils {
 				String bytes64 = null;
 				try {
 					bytes = getBytesFromFile(file);
-					bytes64 = new String(new sun.misc.BASE64Encoder().encode(bytes));
+					bytes64 = new String(new BASE64Encoder().encode(bytes));
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}
@@ -775,7 +775,7 @@ public class ThreadUtils {
 			SecretKeySpec skey = new SecretKeySpec(key.getBytes(), "AES");
 			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
 			cipher.init(Cipher.DECRYPT_MODE, skey);
-			output = cipher.doFinal(Base64.getDecoder().decode(input));
+			output = cipher.doFinal(new BASE64Decoder().decodeBuffer(input));
 		} catch (Exception e) {
 			BaseUtils.sendErr(
 					"Ключ шифрование не совпадает или больше 16 символов, или полученна ошибка от launcher.php");

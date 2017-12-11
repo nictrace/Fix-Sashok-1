@@ -17,7 +17,7 @@ public class Starter {
 			int memory = BaseUtils.getPropertyInt("memory", Settings.defaultmemory);
 
 			ArrayList<String> params = new ArrayList<String>();
-			params.add(System.getProperty("java.home") + "/bin/java");
+			params.add(System.getProperty("java.home") + File.separator + "bin" + File.separator + "java");
 			if (System.getProperty("os.arch").contains("64")
 					&& System.getProperty("sun.arch.data.model").equals("32")) {
 				JOptionPane.showMessageDialog(Frame.main, "Рекомендуется использовать\njava 64 bit", "Предупреждение!",
@@ -36,10 +36,11 @@ public class Starter {
 				BaseUtils.setProperty("memory", 4096);
 			}
 			params.add("-Xmx" + memory + "m");
-			params.add("-XX:MaxPermSize=128m");
+			String[] javaVersionElements = System.getProperty("java.version").split("\\.");
+			if(Integer.parseInt(javaVersionElements[1]) < 8) params.add("-XX:MaxPermSize=128m");
 			if (System.getProperty("os.name").toLowerCase().startsWith("mac")) {
 				params.add("-Xdock:name=Minecraft");
-				params.add("-Xdock:icon=" + BaseUtils.getAssetsDir().toString() + "/favicon.png");
+				params.add("-Xdock:icon=" + BaseUtils.getAssetsDir().toString() + File.separator + "favicon.png");
 			}
 			params.add("-classpath");
 			params.add(jarpath);
